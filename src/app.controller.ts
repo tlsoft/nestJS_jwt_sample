@@ -1,4 +1,11 @@
-import { Controller, Request, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Request,
+  Get,
+  Post,
+  UseGuards,
+  Render,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
@@ -10,6 +17,19 @@ export class AppController {
     private authService: AuthService,
     private readonly appService: AppService,
   ) {}
+
+  @Get('page')
+  //@UseGuards(JwtAuthGuard)
+  @Render('page')
+  root() {
+    return { message: 'Here is the HTML page only when you are auhtorized!' };
+  }
+  @Get('start')
+  //@UseGuards(JwtAuthGuard)
+  @Render('index')
+  start() {
+    return { message: 'Here is the HTML page only when you are auhtorized!' };
+  }
 
   @Get()
   getHello(): string {
